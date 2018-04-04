@@ -430,18 +430,42 @@ In order to show the scores of each tone, each score needs to be moved into diff
 
 Note that the second `Set` section has been added using the `+ add` button lower-left.
 
-Modify the other `change` nodes to reflect "Joy", "Sadness", "Disgust" and "Fear"
+Modify the other `change` nodes in a similar way to reflect "Joy", "Sadness", "Disgust" and "Fear"
+
+The `chart` node will need some configuration to allow it to display the rolling average of the 5 different emotion categories.
+
+![chart-config](img/qcon-chart-config.png)
+
+Click the edit ![edit-icon](img/qcon-config-edit-icon.png) button to establish a default dashboard for the chart.
+
+![dash-default](img/qcon-dashboard-config-default.png)
+
+and click `Add`.
+
+Make sure the `Legend` option is updated to `Show` so you can distinguish between the various lines.
+
+![chart-show](img/qcon-chart-config-show.png)
+
+Once you redeploy the application, following the link to the Dashboard
+
+and you should see the chart building:
+
+![chart-results](img/qcon-emotion-chart.png)
+
+*_Congratulations!_* - you have completed the process of integrating live Twitter with Watson's natural language processing capabilities for identifying emtional tone.
+
+The next Lab will extend this to .
 
 <div style="page-break-after: always;"></div>
 ### Lab - twitter chatbot setup
 
 Now, a selection of the tweets can be directed to a chatbot service to trigger a response (based on the Watson Assitant service).
 
-Firstly, get hold of an existing Chatbot configuration; for this lab, we will be using one of the Bot definitions in the [IBM Bot Asset Exchange](https://developer.ibm.com/code/exchanges/bots/?s=jay-z)
-
-This bot responds to queries with the lyrics and wisdom of renowned artists [Jay-Z](https://en.wikipedia.org/wiki/Jay-Z).
+Firstly, get hold of an existing Chatbot configuration; for this lab, we will be using one of the many Bot definitions in the [IBM Bot Asset Exchange](https://developer.ibm.com/code/exchanges/bots/?s=jay-z)
 
 Click the `Get this bot` option and save the resulting JSON string to a local file. This file will be imported into the Watson Assistant tool shortly.
+
+This bot responds to queries with the lyrics and wisdom of renowned artists [Jay-Z](https://en.wikipedia.org/wiki/Jay-Z).
 
 Yo will need to create an instance of the Watson Assistant service in the IBM Cloud catalog -
  ![Watson Assistant](img/qcon-catalog-watson-assist.png)
@@ -452,7 +476,7 @@ As before, leave the name to default, create the instance, and then use the `Lau
 
 Select the `Create a Workspace` option
 
-![Wayson Assist create](img/qcon-watson-assist-new.png)
+![Watson Assist create](img/qcon-watson-assist-new.png)
 
 And *_carefully_* **NOT** clicking on the `Create` option, select the `Import workspace` icon  ![upload](img/qcon-import-workspace-icon.png) and navigate to your saved Jay-Z bot JSON file.
 
@@ -475,9 +499,17 @@ Using the existing Node-RED flow, select one of the tone category streams from t
 
 You will need the credentials for the Watson Assistant instance, to plug into the node configuration menu. Either:
 + make a connection between the Watson Assitant instance, and your Node-Red application, and after re-stage, the credentials will automatically populate the Watson Conversation nodes
-+ copy the credentials from the Watson Assitant instance, and apply directly to the node configuration, and use straight away.
++ copy the credentials from the Watson Assitant instance, and apply directly to the node configuration, and use straight away (as you did previously for the Watson Tone Analyzer service)
 
-![creds](img/qcon-jayz-credentials.png)
+![creds](img/qcon-watson-tone-analyzer-credentials.png)
+
+**Note** - you also need the Watson Assistant workspace identifiers to plug in to the node configuration
+![tool-menu](img/qcon-watson-assist-menu.png)
+Select the `Workspaces` tab, to see access the workspaces in this instance.
+![tool-workspaces](img/qcon-watson-assist-tool-workspaces.png)
+
+Click the details menu ![details-icon](img/qcon-assist-menu-icon.png) and select `View details` to view the `Workspace ID`  - copy this into the corresponding field in the Node-RED Conversation node configuration panel.
+![assist config](img/qcon-assist-config.png)
 
 
 
