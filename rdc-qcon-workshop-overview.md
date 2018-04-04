@@ -4,6 +4,15 @@
 
 # AI benefits for the lazy hacker
 
+**Use Node-RED lo-code tool to experiment with Cognitive services**
+
+_Ross Cruickshank - Developer Advocate - IBM UK & Ireland_  
+_@rcruicks_  
+_ross@vnet.ibm.com_
+
+
+
+<div style="page-break-after: always;"></div>
 ## Get fast usable access to AI services with Node-RED
 
 The purpose of this workshop is to give you quick and easy access to the *IBM Watson Cognitive Services* APIs, and allow you to experiment with
@@ -315,7 +324,7 @@ You should see a response like:
 The next Lab will build on your new Node-RED skills to pull in tweets from [Twitter](https://twitter.com), analyze with the Watson AI language services, and generate a dashboard showing trending emotional response.
 
 <div style="page-break-after: always;"></div>
-### Lab - twitter sentiment
+### Lab - twitter emtional tone
 
 This time, you can build a fun, simple application that uses the Watson Tone Analyzer service.
 
@@ -359,9 +368,21 @@ All being well, you should see the additonal nodes being dynamically added to th
 You'll find these new nodes towards the bottom of the left-side palette menu.
 
 Once more, create a new flow on the canvas with the following nodes:
+
 ![stage3-flow](img/qcon-stage3-flow.png)
 
-For this Lab we will use **#Trump** as the Twitter topic to monitor.
+The first time you use a `twitter` node, the application will need to be authorized to use Twitter (inbound and, optionally, outbound) using your Twitter credentials. This can be very simple if you have used Twitter through the same browser as you're using to access Node-RED:
+
+1. in the `twitter` configuration panel, click the edit ![edit-twitter](img/qcon-config-edit-icon.png) icon
+1. when you see following prompt in a new tab or window, click  `Click here to authenicate with Twitter`
+![edit-auth-add](img/qcon-twitter-auth-add.png)
+1. you'll be asked to authorise the Node-RED application - click `Authorize app`
+![edit-auth-app](img/qcon-twitter-auth-app.png)
+1. you should receive a message similar to `Authorised - you can close this window and return to Node-RED`  -- close the tab or window, and return to the Node-RED editor view
+1. click `Add`
+1. click `Done` and you're good to go with Twitter integration.
+
+For this Lab we will use **#Trump trade** as the Twitter topic to monitor.
 
 Since this topic is VERY active at the moment, we have to avoid the flood of the incoming tweets overwhelming the Node-RED instance. Add a `delay` node after the `twitter` node and setting the node action to “Limit rate to” 1 message per 1 seconds - this should leave sufficient time for the Watson Tone Analyzer service to handle each request.
 
@@ -378,13 +399,13 @@ In a `function` node named “Add tweet scores to total”, the scores can be ac
 ```
 var defaultResult = {
   "emotion_tone":{
-  "Anger":0,
-  "Disgust":0,
-  "Joy":0,
-  "Sadness":0,
-  "Fear":0
+    "Anger":  0,
+    "Disgust":0,
+    "Joy":    0,
+    "Sadness":0,
+    "Fear":   0
   },
-  "count":0
+  "count":  0
 }
 
 if(msg.payload) {
@@ -452,29 +473,35 @@ Make sure the `Legend` option is updated to `Show` so you can distinguish betwee
 
 Once you redeploy the application, following the link to the Dashboard
 
-and you should see the chart building:
+![dash-link](img/qcon-dash-link.png)
+
+and you should see the chart beginning to build:
 
 ![chart-results](img/qcon-emotion-chart.png)
 
 *_Congratulations!_* - you have completed the process of integrating live Twitter with Watson's natural language processing capabilities for identifying emtional tone.
 
-The next Lab will extend this to .
+The next Lab will extend this to direct some of the tweets (thos with higher emotional levels - > 0.75, for example) to a chatbot, which will offer responses based on the content of the tweet.
 
 <div style="page-break-after: always;"></div>
 ### Lab - twitter chatbot setup
 
 Now, a selection of the tweets can be directed to a chatbot service to trigger a response (based on the Watson Assitant service).
 
-Firstly, get hold of an existing Chatbot configuration; for this lab, we will be using one of the many Bot definitions in the [IBM Bot Asset Exchange](https://developer.ibm.com/code/exchanges/bots/?s=jay-z)
+Add the following 4-node flow to the existing Twitter analysis flow:
+
+![jayz-add](img/qcon-jayz-flow-add.png)
+
+Now, get hold of an existing Chatbot configuration; for this lab, we will be using one of the many Bot definitions at the [IBM Bot Asset Exchange](https://developer.ibm.com/code/exchanges/bots/?s=jay-z). Click this link to access the sample Bot.
 
 Click the `Get this bot` option and save the resulting JSON string to a local file. This file will be imported into the Watson Assistant tool shortly.
 
-This bot responds to queries with the lyrics and wisdom of renowned artists [Jay-Z](https://en.wikipedia.org/wiki/Jay-Z).
+This bot responds to queries/inputs with the lyrics and wisdom of renowned artist [Jay-Z](https://en.wikipedia.org/wiki/Jay-Z).
 
 Yo will need to create an instance of the Watson Assistant service in the IBM Cloud catalog -
  ![Watson Assistant](img/qcon-catalog-watson-assist.png)
 
-As before, leave the name to default, create the instance, and then use the `Launch Tool` option to beging creating a Conversation workspace.
+As before when creating services, leave the name to default, create the instance, and when presented with the service overview panels, use the `Launch Tool` option to begin creating a Conversation workspace. The workspace will be populated by importing the earlier JSON file.
 
 ![Watson Assist tool](img/qcon-watson-assist-tool.png)
 
@@ -499,7 +526,9 @@ This will create the 3 main areas of chatbot server configuration:
 ![dialog](img/qcon-watson-assist-jayz-dialog.png)
 
 
-Using the existing Node-RED flow, select one of the tone category streams from the twitter anlysis [Joy, Anger, Disgust, Sadness, Fear], to direct into the Chatbot, using the Watson Conversation node ![converse](img/qcon-node-watson-conversation-icon.png)
+Using the existing Node-RED flow, select messages with a particularly high emotional count in any of the tone category streams from the twitter analysis [Joy, Anger, Disgust, Sadness, Fear], to direct into the Chatbot, using the Watson Conversation node
+
+![converse](img/qcon-node-watson-conversation-icon.png)
 
 You will need the credentials for the Watson Assistant instance, to plug into the node configuration menu. Either:
 + make a connection between the Watson Assitant instance, and your Node-Red application, and after re-stage, the credentials will automatically populate the Watson Conversation nodes
@@ -507,16 +536,71 @@ You will need the credentials for the Watson Assistant instance, to plug into th
 
 ![creds](img/qcon-watson-tone-analyzer-credentials.png)
 
-**Note** - you also need the Watson Assistant workspace identifiers to plug in to the node configuration
+**Note** - you also need the Watson Assistant workspace identifier to plug in to the node configuration
+
 ![tool-menu](img/qcon-watson-assist-menu.png)
-Select the `Workspaces` tab, to see access the workspaces in this instance.
+
+Select the `Workspaces` tab, to access the workspaces in this instance.
+
 ![tool-workspaces](img/qcon-watson-assist-tool-workspaces.png)
 
-Click the details menu ![details-icon](img/qcon-assist-menu-icon.png) and select `View details` to view the `Workspace ID`  - copy this into the corresponding field in the Node-RED Conversation node configuration panel.
+Click the details menu ![details-icon](img/qcon-assist-menu-icon.png) and select `View details` to view the `Workspace ID` - add this into the corresponding field in the Node-RED Conversation node configuration panel.
+
 ![assist config](img/qcon-assist-config.png)
 
+The output from the `conversation` is a JSON object in `msg.payload` - to extract the text and display in the debug pane, update the `debug` node to select just that part of the message:
 
+![jayz-result](img/qcon-jayz-result.png)
+
+Configure the `change` node to move the twitter content into the `msg.payload` property:
+
+![jayz-change](img/qcon-jayz-flow-change.png)
+
+Last, but not least, configure the `function` node to select messages based on high emotional tone:
+
+![jayz-select](img/qcon-jayz-function-pass.png)
+```
+var tones = msg.response.document_tone.tone_categories[0].tones;
+var pass_on = false;
+tones.forEach(function(tone){
+    if(tone["score"] > 0.75) {
+        pass_on = true;
+    }
+});
+if (pass_on) return msg;
+```
+
+And finally ![deploy](img/qcon-deploy-go.png) !!
+
+*_Congratulations!_* - you have completed the process of generating responses to select tweets, using a basic chatbot configuration.
 
 <div style="page-break-after: always;"></div>
 ## Challenge
-## Congrats!
+
+Now you have a mechanism for processing web requests, handling real-time events from external services, and invoking Watson cognitive services -- what else other easy extensions could you make?
+
++ check tweets for attached images, and pass the images through the `Watson Visual Recognition` service to identify/classify the image content;
+
++ add `Watson Text to Speech` to enable the application to read messages out loud as they arrive, as well as the responses from the chatbot, using different voices
+
++ use the tweet user information to build a profile using `Personality Insights`, and generate tweets to them when "like-minded" twitter profiles are identified.
+
++ store tweets and responses in data store service (noSQL like Cloudant, or SQL like postgresql/DB2/MySQL/etc)
+
++ take what you've built in the IBM Cloud, and deploy into a Node-RED application on your Windows/Linux/MacOS laptop, or a [Raspberry PI](https://raspberrypi.org)
+
++ ...
+
+## Congratulations
+
+If you got this far, you will have added some news skills, and hopefully gained some pleasure from using the lo-code environment of Node-RED to explore APIs and services.
+
+Capabilities you implemented:
+
++ Live **Node-RED** application deployed to **IBM Cloud Cloud Foundry** environment
++ application retrieve and reformat data from remote API service (**JSONServer**)
++ application able to respond to requests for data from browsers or other HTTP requests
++ integrate with **Twitter** to receive live tweets on particular topics/areas of interest
++ analyze Tweets for emotional tones using **Watson Tone Analyzer** service
++ display a dashboard widget charting the changes in average emotional tone over time
++ select a subset of messages based on emotional tone levels, and generate comments using **Watson Assistant** language processing and dialog service
