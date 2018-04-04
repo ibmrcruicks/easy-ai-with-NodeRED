@@ -1,3 +1,7 @@
+
+
+![watson-logo](img/ibm-watson-logo.png)
+
 # AI benefits for the lazy hacker
 
 ## Get fast usable access to AI services with Node-RED
