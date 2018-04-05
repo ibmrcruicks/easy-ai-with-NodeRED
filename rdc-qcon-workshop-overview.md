@@ -167,17 +167,26 @@ Step one for any first-time exercise with a new programming tool is `Hello World
 
 The most basic option for this in Node-RED a combination of an `Inject` and a `Debug` node; for Node-RED this looks like
 ![hello world](img/qcon-hello-world-1.png)
+
 This is achieved by click/dragging an Inject node from the palette on the left, onto the canvas:
+
 ![add-inject](img/qcon-hello-world-add-inject.png)
+
 then do the same for the Debug node:
-![add-inject](qcon-hello-world-add-debug.png)
+
+![add-inject](img/qcon-hello-world-add-debug.png)
+
 and link the output of Inject to the input of Debug:
+
 ![add-inject](img/qcon-hello-world-link.png)
+
 Click-and-hold the output connector of the Inject node, drag the connection line to the Debug node inout connector, ensuring the target connector turns orange; then release.
 
 Review the Debug node by double-clicking in the body of the node, and you will see the configuration panel:
+
 ![debug-config](img/qcon-hello-world-debug.png)
-Click `Cancel`
+
+Click `Cancel`.
 
 Review the Inject node by double-clicking in the body of the node, and you will see its configuration panel:
 ![debug-config](img/qcon-hello-world-inject-initial.png)
@@ -285,30 +294,36 @@ The first `template` sets a msg property `msg.css` to some simple CSS for imbedd
 
 The second `template` node creates a tabular response from the users array, and imbeds the CSS:
 ![stage2-html](img/qcon-stage2-template-html.png)
-```
-<style> {{{css}}} </style> <!-- imbed styling from msg.css -->
-<div>
-    <span class="col title user">Username</span>
-    <span class="col title address">Location</span>
-    <span class="col title website">Website</span>
-</div>
-{{#payload}}
-<div>
-    <span class="col user">{{username}}</span>
-    <span class="col address">
-    {{#address}}
-    <details>
+
+
+    <style> {{{css}}} </style> <!-- imbed styling from msg.css -->
+    <div>
+      <span class="col title user">Username</span>
+      <span class="col title address">Location</span>
+      <span class="col title website">Website</span>
+    </div>
+    {{#payload}}
+    <div>
+      <span class="col user">{{username}}</span>
+      <span class="col address">
+      {{#address}}
+      <details>
         <summary>
-            <a target="_blank" href="https://www.google.com/maps/search/?api=1&query={{geo.lat}},{{geo.lng}}">{{city}}</a>
+        <a target="_blank"
+        href="https://www.google.com/maps/search/?api=1&query={{geo.lat}},{{geo.lng}}">
+        {{city}}
+        </a>
         </summary>
         {{street}}<br>{{city}}<br>{{zipcode}}
-    </details>
-    {{/address}}
+      </details>
+      {{/address}}
     </span>
-    <span class="col website"><a href="http://{{{website}}}">{{website}}</a></span>
-</div>
-{{/payload}}
-```
+    <span class="col website">
+    <a href="http://{{{website}}}">{{website}}</a></span>
+    </div>
+    {{/payload}}
+
+
 Note that although the response will generate links to **Google Maps** locations, the data appears to point to random places.
 
 And again, use the ![deploy-button](img/qcon-deploy-go.png) button to update the runtime.
