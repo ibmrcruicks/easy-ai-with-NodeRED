@@ -123,23 +123,23 @@ The first couple of activities help set up Node-RED as a web application service
 1. Next, your application will use the Watson Tone Analyzer service referred to earlier to quickly and easily analyze the content of Twitter messages and graphically display the trending tones/sentiments embodied in the messages.
 1. Finally, select tweets will be exchanged with an example Watson Conversation Agent (Chatbot) and the responses sent to the requester.
 
-## [NodeRED live](labs/node-red-basic.md)
+## [LAB: NodeRED live](labs/node-red-basic.md)
 
-## [NodeRED server](labs/node-red-server.md)
+## [LAB: NodeRED server](labs/node-red-server.md)
 
-## [NodeRED remote data](labs/node-red-remote.md)
+## [LAB: NodeRED remote data](labs/node-red-remote.md)
 
 The next Lab will build on your new Node-RED skills to pull in tweets from [Twitter](https://twitter.com), analyze with the Watson AI language services, and generate a dashboard showing trending emotional response.
 
-## [Twitter emotional tone lab](labs/twitter-tone.md)
+## [LAB: Twitter emotional tone](labs/twitter-tone.md)
 
 The next Lab will extend this to direct some of the tweets (those with higher emotional levels - > 0.75, for example) to a chatbot, which will offer responses based on the content of the tweet.
 
-## [Twitter chatbot lab](labs/twitter-chatbot.md)
+## [LAB: Twitter chatbot](labs/twitter-chatbot.md)
 
-## [A challenge!](labs/challenge.md)
+## [LAB: A challenge!](labs/challenge.md)
 
-## Congratulations
+## Congratulations!
 
 If you got this far, you will have added some news skills, and hopefully gained some pleasure from using the lo-code environment of Node-RED to explore APIs and services.
 
