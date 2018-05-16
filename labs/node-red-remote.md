@@ -13,13 +13,13 @@ In this Lab, the goal will be to take an incoming HTTP request, from a browser, 
 The source for the remote data is a very handy, simple JSON API server provided by [@typicode](http://twitter.com/typicode)
 **https://jsonplaceholder.typicode.com/** - the /users API returns a reasonable amount of data for demonstration purposes:
 
-![typicode-users](img/qcon-jsonserver-users.png)
+![typicode-users](../img/qcon-jsonserver-users.png)
 
 As before, add a new flow to the canvas:
-![stage2-flow](img/qcon-stage2-flow.png)
+![stage2-flow](../img/qcon-stage2-flow.png)
 
 A small, but important difference to note this time - instead of setting the `msg.payload` property, the `change` node is placing the target API url into the `msg.url` property. This is used to dynamically configure the `http request` node.
-![stage2-change](img/qcon-stage2-change-url.png)
+![stage2-change](../img/qcon-stage2-change-url.png)
 
 The `http request` node does not need any specific configuration for this flow.
 
@@ -29,7 +29,7 @@ To add a little sophistication to the response content, the two `template` nodes
 
 The first `template` sets a msg property `msg.css` to some simple CSS for imbedding in the returned HTML:
 
-![stage2-css](img/qcon-stage2-template-css.png)
+![stage2-css](../img/qcon-stage2-template-css.png)
 ```
 .col {
     display: inline-block;
@@ -46,7 +46,7 @@ The first `template` sets a msg property `msg.css` to some simple CSS for imbedd
 ```
 
 The second `template` node creates a tabular response from the users array, and imbeds the CSS:
-![stage2-html](img/qcon-stage2-template-html.png)
+![stage2-html](../img/qcon-stage2-template-html.png)
 
 
     <style> {{{css}}} </style> <!-- imbed styling from msg.css -->
@@ -85,6 +85,6 @@ Now to test ...
 **_https://{{your-node-red-hostname}}_/stage2**
 
 You should see a response like:
-![stage2-result](img/qcon-stage2-result.png)
+![stage2-result](../img/qcon-stage2-result.png)
 
 *_Congratulations!_* - you have completed the second stage of establishing Node-RED as a web server application, and responding to HTTP requests with dynamically sourced data.
