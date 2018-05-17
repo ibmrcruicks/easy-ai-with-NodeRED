@@ -129,6 +129,11 @@ The first couple of activities help set up Node-RED as a web application service
 
 ## [LAB: NodeRED remote data](labs/node-red-remote.md)
 
+
+The next lab is to make sure you have the WATSON AI nodes installed in Node-RED - if you are using the IBM Cloud Node-RED Boilerplate application, this step can be skipped.
+
+## [LAB: NodeRED install Watson(labs/node-red-watson-install.md)
+
 The next Lab will build on your new Node-RED skills to pull in tweets from [Twitter](https://twitter.com), analyze with the Watson AI language services, and generate a dashboard showing trending emotional response.
 
 ## [LAB: Twitter emotional tone](labs/twitter-tone.md)
