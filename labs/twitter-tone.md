@@ -57,9 +57,9 @@ The first time you use a `twitter` node, the application will need to be authori
 1. click `Add`
 1. click `Done` and you're good to go with Twitter integration.
 
-For this Lab we will use **#LinuxingInLondon** as the Twitter topic to monitor.
+For this Lab we will use **#< your-event-hash-tag >** as the Twitter topic to monitor.
 
-Since this topic is VERY active at the moment, we have to avoid the flood of the incoming tweets overwhelming the Node-RED instance. Add a `delay` node after the `twitter` node and setting the node action to “Limit rate to” 1 message per 1 seconds - this should leave sufficient time for the Watson Tone Analyzer service to handle each request.
+Since this topic is likely to be VERY active, we have to avoid the flood of the incoming tweets overwhelming the Node-RED instance. Add a `delay` node after the `twitter` node and setting the node action to “Limit rate to” 1 message per 1 seconds - this should leave sufficient time for the Watson Tone Analyzer service to handle each request.
 
 You will need to fill in the service credentials (username and password) from the Watson Tone Analyzer service that you created earlier.
 
